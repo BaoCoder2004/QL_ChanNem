@@ -115,10 +115,10 @@
                             <a asp-action="ThanhToan" class="btn btn-block btn-primary my-3 py-3">Thanh toán</a>
                             
                         </div>
-                        <div class="d-flex justify-content-between mt-2">
-                            
-                            <a asp-controller="@Model.KhachHang.MaKh" asp-action="ThongTinKH" class="btn btn-block btn-danger my-3 py-3">Sửa thông tin giao hàng</a>
-                        </div>
+                        <a asp-controller="Account" asp-action="ThongTinKH" asp-route-id="@Model.KhachHang.MaKh" class="btn btn-block btn-danger my-3 py-3">
+                            Sửa thông tin giao hàng
+                        </a>
+
                     </div>
 
                 </div>
