@@ -1,0 +1,184 @@
+﻿@model BTL_TKWeb.ModelView.DDHvaCTDDH
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/None-layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vua Đệm </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/admin/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/img/favicon.png" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <h4>Thông tin đơn hàng</h4>
+                                    <hr />
+                                    <dl class="row">
+
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.TenKhach)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.TenKhach)
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.NgayMua)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.donDatHang.NgayMua)
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.TongTien)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.donDatHang.TongTien)đ
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.DiaChi)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.DiaChi)
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.DienThoai)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.DienThoai)
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.donDatHang.DaXuLy)
+                                        </dt>
+                                        @{
+                                            string cont, cls, butt, nv;
+                                            if (Model.donDatHang.DaXuLy)
+                                            {
+                                                cont = "Đã xử lý";
+                                                cls = "badge badge-success";
+                                                butt = "display: none";
+                                                nv = "display: none";
+                                            }
+                                            else
+                                            {
+                                                cont = "Chưa xử lý";
+                                                cls = "badge badge-danger";
+                                                nv = "display: none";
+                                                butt = "";
+                                                
+                                            }
+                                        }
+                                        <dd class="col-sm-10">
+                                            <label class="@cls">@cont</label>
+                                        </dd>
+                                        <dt class="col-sm-2" style="@nv">
+                                            Nhân viên xử lý đơn hàng
+                                        </dt>
+                                        <dd class="col-sm-10" style="@nv">
+                                            @Html.DisplayFor(model => model.donDatHang.MaNvNavigation.TenNv)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="mb-3">
+                                    <a style="@butt" class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.donDatHang.MaDdh">Huỷ đơn hàng</a>
+                                </div>
+                                <h4 class="card-title">Chi tiết đơn hàng</h4>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Tên mặt hàng
+                                                </th>
+                                                <th>
+                                                    Số lượng
+                                                </th>
+                                                <th>
+                                                    Giảm giá
+                                                </th>
+                                                <th>
+                                                    Thành tiền
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @if (Model != null)
+                                        {
+                                            <tbody>
+                                                @foreach (var item in Model.chiTietDdh)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.MaChiTietHangNavigation.MaHangNavigation.TenHang |
+                                                            @item.MaChiTietHangNavigation.MaMauNavigation.TenMau |
+                                                            @item.MaChiTietHangNavigation.MaKichThuocNavigation.TenKichThuoc |
+                                                            @item.MaChiTietHangNavigation.MaChatLieuNavigation.TenChatLieu
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.SoLuong)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.GiamGia)%
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.ThanhTien)đ
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

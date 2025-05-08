@@ -1,0 +1,64 @@
+﻿@model BTL_TKWeb.ModelView.AdminRegisterViewModel
+
+@{
+    ViewData["Title"] = "TaoTaiKhoanAdmin";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="AdminQuanLyNhanSu" asp-action="Index">Quan lý nhân sự</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm nhân viên</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Tạo tài khoản nhân viên</h4>
+        <form class="forms-sample" asp-action="TaoTaiKhoanAdmin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaNv" class="control-label"></label>
+                <input asp-for="MaNv" class="form-control" />
+                <span asp-validation-for="MaNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenNv" class="control-label"></label>
+                <input asp-for="TenNv" class="form-control" />
+                <span asp-validation-for="TenNv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ngaysinh" class="control-label"></label>
+                <input asp-for="Ngaysinh" class="form-control" />
+                <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="GioiTinh" /> @Html.DisplayNameFor(model => model.GioiTinh)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienThoai" class="control-label"></label>
+                <input asp-for="DienThoai" class="form-control" />
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaCv" class="control-label"></label>
+                <select class="form-select form-control" asp-for="MaCv" asp-items="ViewBag.ChucVu"></select>
+                <span asp-validation-for="MaCv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label"></label>
+                <input asp-for="MatKhau" class="form-control" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhacLaiMatKhau" class="control-label"></label>
+                <input asp-for="NhacLaiMatKhau" class="form-control" />
+                <span asp-validation-for="NhacLaiMatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary me-2" />
+            </div>
+        </form>
+    </div>
+</div>

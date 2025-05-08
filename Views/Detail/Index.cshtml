@@ -1,0 +1,125 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Vua đệm";
+    Layout = "~/Views/Shared/Shop-layout.cshtml";
+}
+@model BTL_TKWeb.Models.DanhMucHang
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Sản Phẩm</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a asp-controller="Home" asp-action="Index">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Sản phẩm</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    @{
+                        int i = 1;
+                        foreach(ChiTietHang chiTiet in Model.ChiTietHangs)
+                        {
+                                                                <div class="carousel-item @(i==1? "active":"")">
+                                                                    <img class="w-100 h-100" src="/img/hang/@(chiTiet.AnhHangs.First().TenAnh)" alt="Image">
+                                                                </div>
+                            i++;
+                        }
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">@Model.TenHang</h3>
+            <p class="mb-4">@Model.ThongTin</p>
+            <div class="d-flex mb-3">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Tuỳ chọn</p>
+                <form>
+                    @{
+                        foreach (ChiTietHang chiTiet in Model.ChiTietHangs)
+                        {
+                                                                <div class="custom-control custom-radio custom-control">
+                                                                    <input type="radio" class="custom-control-input" id="@chiTiet.MaChiTietHang" name="cth"  @(chiTiet.SoLuong==0?"disabled":"")>
+                                                                    <label class="custom-control-label font-weight-semi-bold" for="@chiTiet.MaChiTietHang">
+                                        @(chiTiet.MaMauNavigation.TenMau + " | " + chiTiet.MaKichThuocNavigation.TenKichThuoc + " | " + chiTiet.MaChatLieuNavigation.TenChatLieu + " | " + double.Parse(chiTiet.DonGiaBan.ToString()).ToString("#,##") + "đ" + " | Số lượng còn lại: " +chiTiet.SoLuong)
+                                                                    </label>
+                                                                </div>
+                        }
+                    }
+                </form>
+            </div>
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div>
+                        <label>Số lượng</label> <input type="number" id="sl" min="1" class="form-control text-center" value="1">
+                    </div>
+                </div>
+                <button class="btn btn-primary px-3" id="add"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">Mô tả sản phẩm</h4>
+                    <p>@Model.ThongTin</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shop Detail End -->
+<!-- Products Start -->
+<div class="container-fluid py-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Bạn cũng có thể thích</span></h2>
+    </div>
+    @await Component.InvokeAsync("RenderThemSP",Model.MaHang)
+</div>
+<!-- Products End -->
+@section Scripts{
+    <script>
+        $("button#add").click(function (e) {
+            if ($("input[type=radio]:checked").length > 0) {
+                var $radio = $("input[type=radio]:checked");
+                var id = $radio.attr("id");
+                var soluong = parseInt($("input#sl").val());
+                $.ajax({
+                    url: "/AddToCart/Add",
+                    
+                    data:{ id: id, soluong: soluong },
+                    dataType: 'json',
+                    success: function (respones) {
+                        if (respones.success) {
+                            alert("Thêm sản phẩm thành công");
+                            window.location.reload();
+                        }
+                        else alert("Thêm sản phẩm thất bại");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+                })
+            }
+        });
+    </script>
+}

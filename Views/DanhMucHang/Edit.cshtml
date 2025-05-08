@@ -1,0 +1,50 @@
+﻿@model BTL_TKWeb.Models.DanhMucHang
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Index">Quản lý sản phẩm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Chỉnh sửa sản phẩm</h4>
+        <hr />
+        <div class="row">
+            <div>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MaHang" />
+                    <div class="form-group">
+                        <label asp-for="TenHang" class="control-label"></label>
+                        <input asp-for="TenHang" class="form-control" />
+                        <span asp-validation-for="TenHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaLoai" class="control-label"></label>
+                        <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
+                        <span asp-validation-for="MaLoai" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ThongTin" class="control-label"></label>
+                        <input asp-for="ThongTin" class="form-control" />
+                        <span asp-validation-for="ThongTin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="NgungKinhDoanh" /> Ngừng kinh doanh
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

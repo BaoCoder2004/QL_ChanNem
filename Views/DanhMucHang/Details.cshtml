@@ -1,0 +1,158 @@
+﻿@model BTL_TKWeb.Models.DanhMucHang
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Index">Quản lý sản phẩm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông tin sản phẩm</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin sản phẩm</h4>
+        <hr />
+        <div class="row">
+            <dl class="row col-sm-9">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MaHang)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MaHang)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TenHang)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.TenHang)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ThongTin)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ThongTin)
+                </dd>
+                @{
+                    string cls, cont;
+                    if (Model.NgungKinhDoanh)
+                    {
+
+                        cls = "badge badge-danger";
+                        cont = "Ngừng kinh doanh";
+
+                    }
+                    else
+                    {
+                        if (Model.ChiTietHangs.Count == 0)
+                        {
+                            cls = "badge badge-warning";
+                            cont = "Thiếu thông số";
+                        }
+                        else
+                        {
+                            cls = "badge badge-success";
+                            cont = "Đang kinh doanh";
+                            foreach (ChiTietHang d in Model.ChiTietHangs)
+                            {
+                                if (d.SoLuong == 0)
+                                {
+                                    cls = "badge badge-warning";
+                                    cont = "Sắp hết hàng";
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.NgungKinhDoanh)
+                </dt>
+                <dd class="col-sm-10">
+                    <label class="@cls">@cont</label>
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MaLoaiNavigation.TenLoai)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MaLoaiNavigation.TenLoai)
+                </dd>
+            </dl>
+            <div class="col-sm-3">
+                @{
+                    string imgsrc = "noimg.png";
+                    if (Model.ChiTietHangs.Count > 0)
+                    {
+                        imgsrc = Model.ChiTietHangs.First().AnhHangs.First().TenAnh;
+                    }
+                }
+                <img src="/img/hang/@imgsrc" alt="AnhHang" class="img-fluid" />
+            </div>
+        </div>
+        <div>
+            <a type ="button" class="btn btn-primary mb-3" asp-action="Edit" asp-route-id="@Model?.MaHang">Chỉnh sửa thông tin</a>
+        </div>
+        <h4 class="card-title">Các thông số sản sản phẩm</h4>
+        <hr />
+        <a asp-action="CreateCTH" asp-route-MaHang="@Model.MaHang" type="button" class="btn btn-success">Thêm thông số</a>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Đơn giá nhập
+                        </th>
+                        <th>
+                            Đơn giá bán
+                        </th>
+                        <th>
+                           Số lượng
+                        </th>
+                        <th>
+                            Chất liệu
+                        </th>
+                        <th>
+                            Kích thước
+                        </th>
+                        <th>
+                            Màu sắc
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ChiTietHangs)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonGiaNhap)đ
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonGiaBan)đ
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaChatLieuNavigation.TenChatLieu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKichThuocNavigation.TenKichThuoc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaMauNavigation.TenMau)
+                            </td>
+                            <td>
+                                <a type ="button" class="btn btn-primary" asp-action="EditCTH" asp-route-id="@item.MaChiTietHang">Edit</a>
+                                <a type="button" class="btn btn-danger" asp-action="DeleteCTH" asp-route-id="@item.MaChiTietHang">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

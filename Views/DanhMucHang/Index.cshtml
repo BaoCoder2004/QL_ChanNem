@@ -1,0 +1,110 @@
+﻿@model IEnumerable<BTL_TKWeb.Models.DanhMucHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Quản lý sản phẩm</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Danh sách sản phẩm </h4>
+        <a asp-action="Create" type="button" class="btn btn-success">Thêm sản phẩm</a>
+        <a asp-action="ThemChiTiet" type="button" class="btn btn-success">Thêm tuỳ chọn thông số</a>
+        <div class="table-responsive">
+            @if (Model == null || Model.Count() == 0)
+            {
+                <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+                    <div class="alert alert-secondary text-center">
+                        Chưa có gì ở đây
+                    </div>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaHang)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TenHang)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NgungKinhDoanh)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaLoaiNavigation.TenLoai)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @if (Model != null)
+                    {
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaHang)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenHang)
+                                    </td>
+                                    @{
+                                        string cls, cont;
+                                        if (item.NgungKinhDoanh)
+                                        {
+
+                                            cls = "badge badge-danger";
+                                            cont = "Ngừng kinh doanh";
+
+                                        }
+                                        else
+                                        {
+                                            if (item.ChiTietHangs.Count == 0)
+                                            {
+                                                cls = "badge badge-danger";
+                                                cont = "Thiếu thông số";
+                                            }
+                                            else
+                                            {
+                                                cls = "badge badge-success";
+                                                cont = "Đang kinh doanh";
+                                                foreach (ChiTietHang d in item.ChiTietHangs)
+                                                {
+                                                    if (d.SoLuong == 0)
+                                                    {
+                                                        cls = "badge badge-warning";
+                                                        cont = "Sắp hết hàng";
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    <td>
+                                        <label class="@cls">@cont</label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaLoaiNavigation.TenLoai)
+                                    </td>
+                                    <td>
+                                        <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.MaHang">Chỉnh sửa</a>
+                                        <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.MaHang">Chi tiết</a>
+                                        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MaHang">Xoá</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>

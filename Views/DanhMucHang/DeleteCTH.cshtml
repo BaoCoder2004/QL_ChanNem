@@ -1,0 +1,45 @@
+﻿@model BTL_TKWeb.Models.ChiTietHang
+
+@{
+    ViewData["Title"] = "DeleteCTH";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Bạn có chắc muốn xoá thông số sản phẩm này</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MaHangNavigation.TenHang)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaHangNavigation.TenHang)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MaMauNavigation.TenMau)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaMauNavigation.TenMau)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MaKichThuocNavigation.TenKichThuoc)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaKichThuocNavigation.TenKichThuoc)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MaChatLieuNavigation.TenChatLieu)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaChatLieuNavigation.TenChatLieu)
+            </dd>
+        </dl>
+
+        <form asp-action="DeleteCTH">
+            <input type="hidden" asp-for="MaChiTietHang" />
+            <input type="submit" value="Xoá" class="btn btn-danger" />
+            <a type="button" class="btn btn-primary" asp-action="Index">Huỷ</a>
+        </form>
+    </div>
+</div>

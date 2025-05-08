@@ -1,0 +1,151 @@
+﻿@using BTL_TKWeb.ModelView
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Vua đệm";
+    Layout = "~/Views/Shared/Shop-layout.cshtml";
+}
+@model BTL_TKWeb.ModelView.ThongTinGioHang
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ Hàng</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a asp-controller="Home" asp-action="Index">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Giỏ Hàng</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Cart Start -->
+<div class="container-fluid pt-5">
+    @if (Model.Hangs == null || Model.Hangs.Count == 0)
+    {
+        <div class="container d-flex justify-content-center align-items-center" style="height: 30vh;">
+            <div class="alert alert-secondary text-center">
+                Chưa có gì ở đây
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng cộng</th>
+                            <th>Xoá</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @{
+                            foreach (CartItem chiTiet in Model.Hangs)
+                            {
+                                <tr>
+                                    <td class="align-middle">
+                                        <a asp-controler="Detail" asp-action="Index" asp-route-id="@chiTiet.Hang.MaHangNavigation.MaHang">
+                                            @(chiTiet.Hang.MaHangNavigation.TenHang + " | " + chiTiet.Hang.MaMauNavigation.TenMau+" | "
+                                            + chiTiet.Hang.MaChatLieuNavigation.TenChatLieu+" | " + chiTiet.Hang.MaKichThuocNavigation.TenKichThuoc)
+                                        </a>
+                                    </td>
+                                    <td class="align-middle">@(((double)chiTiet.Hang.DonGiaBan).ToString("#,##"))đ</td>
+                                    <td class="align-middle">
+                                        <div class="input-group quantity mx-auto d-flex justify-content-center align-items-center" style="width: 100px;">
+                                            <p>@(chiTiet.SoLuong)</p>
+                                            <!--<input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">-->
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">@(((double)chiTiet.ThanhTien).ToString("#,##"))đ</td>
+                                    <td class="align-middle"><button class="btn btn-sm btn-primary remove" id="@chiTiet.Hang.MaChiTietHang"><i class="fa fa-times"></i></button></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Thanh toán</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Giảm giá</h6>
+                            <h6 class="font-weight-medium">@(Model.LanDau ? "10" : "0")%</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Tổng cộng</h5>
+                            @{
+                                double gg = Model.LanDau ? 0.9 : 1;
+                            }
+                            <h5 class="font-weight-bold">@((Math.Ceiling((double)Model.TinhTien() * gg)).ToString("#,##"))đ</h5>
+                        </div>
+                    </div>
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Thông tin giao hàng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Người nhận</h6>
+                            <h6 class="font-weight-medium">@(Model.KhachHang.TenKhach)</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Địa chỉ</h6>
+                            <h6 class="font-weight-medium">@(Model.KhachHang.DiaChi)</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Số ĐT</h6>
+                            <h6 class="font-weight-medium">@(Model.KhachHang.DienThoai)</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <a asp-action="ThanhToan" class="btn btn-block btn-primary my-3 py-3">Thanh toán</a>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            
+                            <a asp-controller="@Model.KhachHang.MaKh" asp-action="ThongTinKH" class="btn btn-block btn-danger my-3 py-3">Sửa thông tin giao hàng</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- Cart End -->
+@section Scripts {
+    <script>
+        $("button.remove").click(function (e) {
+            var id = $(this).attr("id");
+            $.ajax({
+                url: "/AddToCart/Delete",
+                data: { id: id },
+                dataType: 'json',
+                success: function (respones) {
+                    if (respones.success) {
+                        alert("Xoá sản phẩm thành công");
+                        window.location.reload();
+                    }
+                    else alert("Xoá sản phẩm thất bại");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+            })
+        });
+    </script>
+}

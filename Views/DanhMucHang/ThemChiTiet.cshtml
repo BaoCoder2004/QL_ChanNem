@@ -1,0 +1,171 @@
+﻿@model BTL_TKWeb.ModelView.ThongSo
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Index">Quản lý sản phẩm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm/xoá tuỳ chọn thông số</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thêm/xoá tuỳ chọn thông số</h4>
+        <a asp-action="Create" type="button" class="btn btn-success">Thêm sản phẩm</a>
+        <div class="row">
+            <form asp-action="ThemChiTiet" class="col-sm-6">
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaChatLieu)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TenChatLieu)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaChatLieu" class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="TenChatLieu" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaMau)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TenMau)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaMau" class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="TenMau" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaKichThuoc)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TenKichThuoc)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaKichThuoc" class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="TenKichThuoc" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </form>
+            <form asp-action="XoaChiTiet" class="col-sm-6">
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaChatLieu)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaChatLieu" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaMau)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaMau" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive mb-3">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaKichThuoc)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input asp-for="MaKichThuoc" class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="Xoá" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+</div>

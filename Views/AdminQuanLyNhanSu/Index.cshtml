@@ -1,0 +1,87 @@
+﻿@model IEnumerable<BTL_TKWeb.Models.NhanVien>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Quản lý nhân sự</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Bảng nhân viên</h4>
+        <a asp-action="TaoTaiKhoan" type="button" class="btn btn-success">Thêm nhân viên</a>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TenNv)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ngaysinh)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GioiTinh)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DienThoai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NghiViec)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MaCvNavigation.TenCv)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenNv)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ngaysinh)
+                            </td>
+                            <td>
+                                @((bool)item.GioiTinh? "Nam":"Nữ")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DienThoai)
+                            </td>
+                            @{
+                                string cls, cont;
+                                if ((bool)item.NghiViec)
+                                {
+                                    cls = "badge badge-danger";
+                                    cont = "Đã nghỉ việc";
+                                }
+                                else
+                                {
+                                    cls = "badge badge-success";
+                                    cont = "Đang hoạt động";
+                                }
+                            }
+                            <td>
+                                <label class="@cls">@cont</label>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaCvNavigation.TenCv)
+                            </td>
+                            <td>
+                                <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-MaNV="@item.MaNv">Chỉnh sửa</a>
+                                <a type="button" class="btn btn-info" asp-action="Detail" asp-route-MaNV="@item.MaNv">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

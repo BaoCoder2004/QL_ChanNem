@@ -1,0 +1,194 @@
+﻿@model List<DanhMucHang>
+@{
+    ViewData["Title"] = "Vua Đệm";
+    Layout = "~/Views/Shared/Shop-layout.cshtml";
+}
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Cửa Hàng</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a asp-controller="Home" asp-action="Index">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Cửa hàng</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Shop Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <!-- Shop Sidebar Start -->
+        <div class="col-lg-3 col-md-12">
+            <!-- Danh mục Start -->
+            <div class="mb-5">
+                <h5 class="font-weight-semi-bold mb-4">Lọc theo danh mục</h5>
+                <form>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="ALL" name="loai">
+                        <label class="custom-control-label" for="ALL">Tất cả</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="CHAN" name="loai">
+                        <label class="custom-control-label" for="CHAN">Chăn</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="GA" name="loai">
+                        <label class="custom-control-label" for="GA">Ga</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="GOI" name="loai">
+                        <label class="custom-control-label" for="GOI">Gối</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="DEM" name="loai">
+                        <label class="custom-control-label" for="DEM">Đệm</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input id" id="PHUKIEN" name="loai">
+                        <label class="custom-control-label" for="PHUKIEN">Phụ kiện</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between">
+                        <input type="radio" class="custom-control-input id" id="NOITHAT" name="loai">
+                        <label class="custom-control-label" for="NOITHAT">Nội thất</label>
+                    </div>
+                </form>
+            </div>
+            <!-- Danh mục End -->
+        </div>
+        <!-- Shop Sidebar End -->
+        <!-- Shop Product Start -->
+        <div class="col-lg-9 col-md-12">
+            <div class="row pb-3">
+                <div class="col-12 pb-1">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="dropdown ml-4">
+                            <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Sắp xếp theo
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                                <a class="dropdown-item sort" id="1">Giá</a>
+                                <a class="dropdown-item sort" id="2">Phổ biến</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content" class="row col-12 pb-1">
+                    @{
+                        foreach (DanhMucHang danhMucHang in Model)
+                        {
+                                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                                            <div class="card product-item border-0 mb-4">
+                                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                                    <img class="img-fluid w-100" src="/img/hang/@(danhMucHang.ChiTietHangs.First().AnhHangs.First().TenAnh)" alt="">
+                                                </div>
+                                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                                    <h6 class="text-truncate mb-3">@(danhMucHang.TenHang)</h6>
+                                                    <div class="d-flex justify-content-center">
+                                                        <h6>@(((double)danhMucHang.ChiTietHangs.First().DonGiaBan).ToString("#,##"))đ</h6>
+                                                        <h6 class="text-muted ml-2"><del>@(Math.Ceiling((double)danhMucHang.ChiTietHangs.First().DonGiaBan / 0.8).ToString("#,##"))đ</del></h6>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                                    <a asp-controller="Detail" asp-action="Index" asp-route-id="@danhMucHang.MaHang" class="btn btn-sm text-dark p-0 mx-auto"><i class="fas fa-eye text-primary"></i>Xem chi tiết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                        }
+                    }
+                    <div class="col-12 pb-1">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center mb-3">
+                                @{
+                                    if (ViewBag.pagenum > 0)
+                                    {
+                                                <li class="page-item @(ViewBag.current == 1 ? "active":"")" page="1"
+                                                        keyword="@(ViewBag.search != null ? ViewBag.search : "")"
+                                                        sort="@(ViewBag.sort !=null? ViewBag.sort:"")"
+                                                        id="@(ViewBag.id!=null? ViewBag.id:"")">
+                                                        <a class="page-link ">1</a>
+                                                    </li>
+                                                    @for (int i = new[] { ViewBag.current - 2, 2 }.Max(); i <= new[] { ViewBag.current + 2, ViewBag.pagenum - 1 }.Min(); i++)
+                                        {
+                                                    <li class="page-item @(ViewBag.current == i ? "active":"")" page="@i"
+                                                            keyword="@(ViewBag.search != null ? ViewBag.search : "")"
+                                                            sort="@(ViewBag.sort !=null? ViewBag.sort:"")"
+                                                            id="@(ViewBag.id!=null? ViewBag.id:"")">
+                                                            <a class="page-link ">@i</a>
+                                                        </li>
+                                        }
+                                        if (ViewBag.pagenum > 1)
+                                        {
+                                                    <li class="page-item @(ViewBag.current==ViewBag.pagenum ? "active":"" )" page="@ViewBag.pagenum"
+                                                            keyword="@(ViewBag.search != null ? ViewBag.search : "")"
+                                                            sort="@(ViewBag.sort !=null? ViewBag.sort:"")"
+                                                            id="@(ViewBag.id!=null? ViewBag.id:"")">
+                                                            <a class="page-link ">@ViewBag.pagenum</a>
+                                                        </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shop Product End -->
+    </div>
+</div>
+<!-- Shop End -->
+@section Scripts {
+    <script>
+        //thêm script ajax cho click vào page-item, nút search
+           $('body').on('click', 'li.page-item', function (e) {
+               var page = $(this).attr("page");
+               var sort = $(this).attr("sort");
+               var keyword = $(this).attr("keyword");
+               var id = $(this).attr("id");
+               var data = { search: keyword, id:id,sort:sort,page:page };
+               $.ajax({
+                   url: "/Shop/IndexContent",
+                   data: data,
+                   success: function (response) {
+                       $("div#content").html(response);
+                   },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+               });
+           });
+           $("input.id").click(function (e) {
+               var id = $(this).attr("id");
+                var sort = $("a.sort").attr("id");
+               var data = { id: id, sort:sort };
+               $.ajax({
+                url: "/Shop/IndexContent",
+                   data: data,
+                   success: function (response) {
+                       $("div#content").html(response);
+                   },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+               });
+           });
+           $("a.sort").click(function (e) {
+               var sort = $(this).attr("id");
+               var id = $("input[name='loai']:checked").attr("id");
+               var data = {id:id, sort:sort };
+               $.ajax({
+                url: "/Shop/IndexContent",
+                   data: data,
+                   success: function (response) {
+                       $("div#content").html(response);
+                   },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+               });
+           });
+    </script>
+}
+

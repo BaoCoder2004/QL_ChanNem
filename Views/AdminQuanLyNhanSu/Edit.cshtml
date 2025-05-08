@@ -1,0 +1,65 @@
+﻿@model BTL_TKWeb.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="AdminQuanLyNhanSu" asp-action="Index">Quản lý nhân sự</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Chỉnh sửa</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MaNv" />
+                    <div class="form-group">
+                        <label asp-for="TenNv" class="control-label"></label>
+                        <input asp-for="TenNv" class="form-control" />
+                        <span asp-validation-for="TenNv" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Ngaysinh" class="control-label"></label>
+                        <input asp-for="Ngaysinh" class="form-control" />
+                        <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+                    </div>
+                    <div class="form-group checkbox">
+                        <label asp-for="GioiTinh" class="control-label form-check-label">Giới tính (nữ bỏ chọn)</label>
+                        <input class="form-check-input" asp-for="GioiTinh" />
+                        <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DienThoai" class="control-label"></label>
+                        <input asp-for="DienThoai" class="form-control" />
+                        <span asp-validation-for="DienThoai" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaCv" class="control-label">Chức vụ</label>
+                        <select class="form-select form-control" asp-for="MaCv" asp-items="ViewBag.ChucVu"></select>
+                        <span asp-validation-for="MaCv" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MatKhau" class="control-label"></label>
+                        <input asp-for="MatKhau" class="form-control" />
+                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                    </div>
+                    <div class="form-group checkbox">
+                        <label asp-for="NghiViec" class="control-label">Thôi việc</label>
+                        <input asp-for="NghiViec" class="form-check-input" />
+                        <span asp-validation-for="NghiViec" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Lưu" class="btn btn-primary mb-1" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+﻿@model BTL_TKWeb.ModelView.DDHvaCTDDH
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DonDatHang" asp-action="Index">Quản lý đơn hàng</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <h4>Thông tin đơn hàng</h4>
+            <hr />
+            <dl class="row">
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.TenKhach)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.TenKhach)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.NgayMua)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.donDatHang.NgayMua)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.TongTien)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.donDatHang.TongTien)đ
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.DiaChi)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.DiaChi)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.MaKhNavigation.DienThoai)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.donDatHang.MaKhNavigation.DienThoai)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.donDatHang.DaXuLy)
+                </dt>
+                @{
+                    string cont, cls, butt, nv;
+                    if (Model.donDatHang.DaXuLy)
+                    {
+                        cont = "Đã xử lý";
+                        cls = "badge badge-success";
+                        butt = "display: none";
+                        nv = "";
+                    }
+                    else
+                    {
+                        cont = "Chưa xử lý";
+                        cls = "badge badge-danger";
+                        nv = "display: none";
+                        butt = "";
+                    }
+                }
+                <dd class="col-sm-10">
+                    <label class="@cls">@cont</label>
+                </dd>
+                <dt class="col-sm-2" style="@nv">
+                    Nhân viên xử lý đơn hàng
+                </dt>
+                <dd class="col-sm-10" style="@nv">
+                    @Html.DisplayFor(model => model.donDatHang.MaNvNavigation.TenNv)
+                </dd>
+            </dl>
+        </div>
+        <div class="mb-3">
+            <a style="@butt" class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.donDatHang.MaDdh">Xử lý đơn hàng</a>
+        </div>
+        <h4 class="card-title">Chi tiết đơn hàng</h4>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên mặt hàng
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                        <th>
+                            Giảm giá
+                        </th>
+                        <th>
+                            Thành tiền
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    <tbody>
+                        @foreach (var item in Model.chiTietDdh)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MaChiTietHangNavigation.MaHangNavigation.TenHang |
+                                    @item.MaChiTietHangNavigation.MaMauNavigation.TenMau |
+                                    @item.MaChiTietHangNavigation.MaKichThuocNavigation.TenKichThuoc |
+                                    @item.MaChiTietHangNavigation.MaChatLieuNavigation.TenChatLieu
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GiamGia)%
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThanhTien)đ
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</div>

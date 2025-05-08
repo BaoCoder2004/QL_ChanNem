@@ -1,0 +1,86 @@
+﻿@model BTL_TKWeb.ModelView.ChiTietHangVaAnh
+
+@{
+    ViewData["Title"] = "CreataCTH";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Index">Quản lý sản phẩm</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Details" asp-route-id="@(Model.MaHang)">Thông tin sản phẩm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm thông số sản phẩm</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thêm thông số sản phẩm</h4>
+        <a asp-action="ThemChiTiet" type="button" class="btn btn-success mt-2 mb-2">Thêm tuỳ chọn thông số</a>
+        <h6>@Model.MaHangNavigation.TenHang</h6>
+        <hr />
+        <div class="row">
+            <div class="col-md-7">
+                <form asp-action="CreateCTH" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MaChiTietHang" />
+                    <input type="hidden" asp-for="MaHang" />
+                    <div class="form-group">
+                        <label asp-for="MaMau" class="control-label"></label>
+                        <select asp-for="MaMau" class="form-control" asp-items="ViewBag.MaMau"></select>
+                        <span asp-validation-for="MaMau" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaChatLieu" class="control-label"></label>
+                        <select asp-for="MaChatLieu" class="form-control" asp-items="ViewBag.MaChatLieu"></select>
+                        <span asp-validation-for="MaChatLieu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaKichThuoc" class="control-label"></label>
+                        <select asp-for="MaKichThuoc" class="form-control" asp-items="ViewBag.MaKichThuoc"></select>
+                        <span asp-validation-for="MaKichThuoc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DonGiaNhap" class="control-label"></label>
+                        <input asp-for="DonGiaNhap" class="form-control" />
+                        <span asp-validation-for="DonGiaNhap" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DonGiaBan" class="control-label"></label>
+                        <input asp-for="DonGiaBan" class="form-control" />
+                        <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SoLuong" class="control-label"></label>
+                        <input asp-for="SoLuong" class="form-control" />
+                        <span asp-validation-for="SoLuong" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Anh" class="control-label"></label>
+                        <input asp-for="Anh" class="form-control" accept=".jpg,.png,.jpeg" onchange="readURL(this)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-5">
+                <img id="chooseimg" src="/img/noimg.png" alt="AnhHang" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#chooseimg').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

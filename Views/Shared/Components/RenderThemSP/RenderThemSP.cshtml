@@ -1,0 +1,24 @@
+﻿@model List<DanhMucHang>
+<div class="row px-xl-5">
+    <div class="col">
+        <div class="owl-carousel related-carousel">
+            @foreach(DanhMucHang danhMucHang in Model){
+                <div class="card product-item border-0">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="/img/hang/@danhMucHang.ChiTietHangs.First().AnhHangs.First().TenAnh" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">@danhMucHang.TenHang</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>@double.Parse(@danhMucHang.ChiTietHangs.First().DonGiaBan.ToString()).ToString("#,##")đ</h6>
+                            <h6 class="text-muted ml-2"><del>@Math.Ceiling((double)@danhMucHang.ChiTietHangs.First().DonGiaBan*0.8).ToString("#,##")đ</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a asp-controller="Detail" asp-action="Index" asp-route-id="@danhMucHang.MaHang" class="btn btn-sm text-dark p-0 mx-auto"><i class="fas fa-eye text-primary"></i>Xem chi tiết</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

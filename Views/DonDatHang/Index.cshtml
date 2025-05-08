@@ -1,0 +1,163 @@
+﻿@model IEnumerable<BTL_TKWeb.Models.DonDatHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Quản lý đơn hàng</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item d-flex align-items-center">
+                    <h4 class="card-title d-flex justify-content-center align-items-center mb-0">Bảng đơn hàng</h4>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <input id="search" class="form-control" placeholder="Tên/Mã khách hàng" title="Tìm theo tên khách hàng">
+                </li>
+            </ul>
+        </nav>
+        <hr />
+        <div class="table-responsive" id="content">
+            @if (Model == null || Model.Count() == 0)
+            {
+                <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+                    <div class="alert alert-secondary text-center">
+                        Chưa có gì ở đây
+                    </div>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaKhNavigation.TenKhach)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NgayMua)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TongTien)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DaXuLy)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @if (Model != null)
+                    {
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaKhNavigation.TenKhach)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayMua)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TongTien)đ
+                                    </td>
+                                    @{
+                                        string cont, cls;
+                                        if (item.DaXuLy)
+                                        {
+                                            cont = "Đã xử lý";
+                                            cls = "badge badge-success";
+                                        }
+                                        else
+                                        {
+                                            cont = "Chưa xử lý";
+                                            cls = "badge badge-danger";
+                                        }
+                                    }
+                                    <td>
+                                        <label class="@cls">@cont</label>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.MaDdh">Chi tiết</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+            }
+            <div class="col-12 pb-1">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mb-3">
+                        @{
+                            if (ViewBag.pagenum > 0)
+                            {
+                                <li class="page-item @(ViewBag.current == 1 ? "active":"")" page="1"
+                                    keyword="@(ViewBag.search != null ? ViewBag.search : "")">
+                                    <a class="page-link ">1</a>
+                                </li>
+                                @for (int i = new[] { ViewBag.current - 2, 2 }.Max(); i <= new[] { ViewBag.current + 2, ViewBag.pagenum - 1 }.Min(); i++)
+                                {
+                                    <li class="page-item @(ViewBag.current == i ? "active":"")" page="@i"
+                                        keyword="@(ViewBag.search != null ? ViewBag.search : "")">
+                                        <a class="page-link ">@i</a>
+                                    </li>
+                                }
+                                if (ViewBag.pagenum > 1)
+                                {
+                                    <li class="page-item @(ViewBag.current==ViewBag.pagenum ? "active":"" )" page="@ViewBag.pagenum"
+                                        keyword="@(ViewBag.search != null ? ViewBag.search : "")">
+                                        <a class="page-link ">@ViewBag.pagenum</a>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $("body").on('click', 'li.page-item', function (e) {
+            var page = $(this).attr("page");
+            var keyword = $(this).attr("keyword");
+            var data = {  search: keyword, page: page };
+            $.ajax({
+                url:"/DonDatHang/IndexContent",
+                data: data,
+                success: function (respone) {
+                    $("div#content").html(respone);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                }
+            });
+        });
+        
+        $("input#search").on("keydown",function (e) {
+            if (e.keyCode == 13) {
+                var key = $("#search").val();
+                $.ajax({
+                    url: "/DonDatHang/IndexContent",
+                    data: { search: key },
+                    success: function (respone) {
+                        $("div#content").html(respone);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                    }
+                });
+            }
+        });
+    </script>
+}

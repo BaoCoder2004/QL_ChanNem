@@ -1,0 +1,105 @@
+﻿@model BTL_TKWeb.ModelView.RegisterViewModel
+
+@{
+    ViewData["Title"] = "TaoTaiKhoan";
+    Layout = "~/Views/Shared/None-layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Thông tin </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/admin/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/img/favicon.png" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                            <div class="brand-logo">
+                                <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold px-3 mr-1">Vua</span>Đệm</h1>
+                            </div>
+                            <h4>Thông tin tài khoản</h4>
+                            <form class="forms-sample" asp-action="ThongTinKH">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group" style="display: none">
+                                    <label asp-for="MaKh" class="control-label"></label>
+                                    <input asp-for="MaKh" class="form-control" />
+                                    <span asp-validation-for="MaKh" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TenKh" class="control-label"></label>
+                                    <input asp-for="TenKh" class="form-control" />
+                                    <span asp-validation-for="TenKh" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DienThoai" class="control-label"></label>
+                                    <input asp-for="DienThoai" class="form-control" />
+                                    <span asp-validation-for="DienThoai" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DiaChi" class="control-label"></label>
+                                    <input asp-for="DiaChi" class="form-control" />
+                                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MatKhau" class="control-label"></label>
+                                    <input asp-for="MatKhau" class="form-control" />
+                                    <span asp-validation-for="MatKhau" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="NhacLaiMatKhau" class="control-label"></label>
+                                    <input asp-for="NhacLaiMatKhau" class="form-control" />
+                                    <span asp-validation-for="NhacLaiMatKhau" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row d-flex">
+                                    <input type="submit" value="Lưu" class="btn btn-primary mb-3" />
+                                    <a asp-action="Index" asp-controller="Home" class="btn btn-danger font-weight-medium auth-form-btn mb-3">Huỷ</a>
+                                    <a asp-action="DonHang" asp-route-id="@Model.MaKh" class="btn btn-success font-weight-medium auth-form-btn mb-3">Đơn hàng của tôi</a>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

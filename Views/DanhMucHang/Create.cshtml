@@ -1,0 +1,53 @@
+﻿@model BTL_TKWeb.Models.DanhMucHang
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/Admin-layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a asp-controller="DanhMucHang" asp-action="Index">Quản lý sản phẩm</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thêm sản phẩm </h4>
+        <hr />
+        <div class="row">
+            <div>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="MaHang" class="control-label"></label>
+                        <input asp-for="MaHang" class="form-control" />
+                        <span asp-validation-for="MaHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TenHang" class="control-label"></label>
+                        <input asp-for="TenHang" class="form-control" />
+                        <span asp-validation-for="TenHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaLoai" class="control-label"></label>
+                        <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ThongTin" class="control-label"></label>
+                        <textarea asp-for="ThongTin" rows="3"></textarea>
+                        <span asp-validation-for="ThongTin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check" style="display: none">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="NgungKinhDoanh" /> @Html.DisplayNameFor(model => model.NgungKinhDoanh)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
