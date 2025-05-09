@@ -31,7 +31,7 @@ namespace BTL_TKWeb.ModelView
         public string DiaChi { get; set; }
         [Required(ErrorMessage = "Hãy nhập lại mật khẩu")]
         [Display(Name = "Nhắc lại mật khẩu")]
-        [Compare("MatKhau", ErrorMessage = "Mật khẩu chư trùng khớp")]
-        public string NhacLaiMatKhau { get; set; }
+        [Compare("MatKhau", ErrorMessage = "Mật khẩu chưa trùng khớp")]
+        public string NhacLaiMatKhau { get; set; }  
     }
 }

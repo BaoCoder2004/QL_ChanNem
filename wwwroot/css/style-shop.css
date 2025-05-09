@@ -9582,3 +9582,15 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+
+.desc{
+    font-size: 25px;
+}
+
+.sale-title {
+    font-size: 18px;
+}
+
+.btn-cart{
+    margin-top: 30px;
+}

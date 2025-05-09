@@ -28,9 +28,9 @@
                         int i = 1;
                         foreach(ChiTietHang chiTiet in Model.ChiTietHangs)
                         {
-                                                                <div class="carousel-item @(i==1? "active":"")">
-                                                                    <img class="w-100 h-100" src="/img/hang/@(chiTiet.AnhHangs.First().TenAnh)" alt="Image">
-                                                                </div>
+                            <div class="carousel-item @(i==1? "active":"")">
+                                <img class="w-100 h-100" src="/img/hang/@(chiTiet.AnhHangs.First().TenAnh)" alt="Image">
+                            </div>
                             i++;
                         }
                     }
@@ -53,12 +53,12 @@
                     @{
                         foreach (ChiTietHang chiTiet in Model.ChiTietHangs)
                         {
-                                                                <div class="custom-control custom-radio custom-control">
-                                                                    <input type="radio" class="custom-control-input" id="@chiTiet.MaChiTietHang" name="cth"  @(chiTiet.SoLuong==0?"disabled":"")>
-                                                                    <label class="custom-control-label font-weight-semi-bold" for="@chiTiet.MaChiTietHang">
-                                        @(chiTiet.MaMauNavigation.TenMau + " | " + chiTiet.MaKichThuocNavigation.TenKichThuoc + " | " + chiTiet.MaChatLieuNavigation.TenChatLieu + " | " + double.Parse(chiTiet.DonGiaBan.ToString()).ToString("#,##") + "đ" + " | Số lượng còn lại: " +chiTiet.SoLuong)
-                                                                    </label>
-                                                                </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input type="radio" class="custom-control-input" id="@chiTiet.MaChiTietHang" name="cth"  @(chiTiet.SoLuong==0?"disabled":"")>
+                                <label class="custom-control-label font-weight-semi-bold" for="@chiTiet.MaChiTietHang">
+                                @(chiTiet.MaMauNavigation.TenMau + " | " + chiTiet.MaKichThuocNavigation.TenKichThuoc + " | " + chiTiet.MaChatLieuNavigation.TenChatLieu + " | " + double.Parse(chiTiet.DonGiaBan.ToString()).ToString("#,##") + "đ" + " | Số lượng còn lại: " +chiTiet.SoLuong)
+                                </label>
+                            </div>
                         }
                     }
                 </form>
@@ -69,7 +69,7 @@
                         <label>Số lượng</label> <input type="number" id="sl" min="1" class="form-control text-center" value="1">
                     </div>
                 </div>
-                <button class="btn btn-primary px-3" id="add"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+                <button class="btn btn-primary px-3 btn-cart" id="add"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
             </div>
         </div>
     </div>
